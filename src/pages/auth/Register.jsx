@@ -103,18 +103,12 @@ function Register() {
       // Create pending registration
       // =====================================
 
-      const registrationResponse = await api.post(
-        "/organizations",
-        formData,
-      );
+      const registrationResponse = await api.post("/organizations", formData);
 
-      const registrationId =
-        registrationResponse.data?.registrationId;
+      const registrationId = registrationResponse.data?.registrationId;
 
       if (!registrationId) {
-        throw new Error(
-          "Registration ID was not returned by the server.",
-        );
+        throw new Error("Registration ID was not returned by the server.");
       }
 
       // =====================================
@@ -126,13 +120,10 @@ function Register() {
         `/payments/checkout/${registrationId}`,
       );
 
-      const checkoutUrl =
-        checkoutResponse.data?.checkoutUrl;
+      const checkoutUrl = checkoutResponse.data?.checkoutUrl;
 
       if (!checkoutUrl) {
-        throw new Error(
-          "Stripe checkout URL was not returned by the server.",
-        );
+        throw new Error("Stripe checkout URL was not returned by the server.");
       }
 
       // =====================================
@@ -162,9 +153,7 @@ function Register() {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
         <div className="rounded-xl bg-white p-8 text-center shadow">
-          <p className="text-gray-600">
-            Loading subscription plans...
-          </p>
+          <p className="text-gray-600">Loading subscription plans...</p>
         </div>
       </div>
     );
@@ -181,8 +170,7 @@ function Register() {
           </h1>
 
           <p className="mt-2 text-gray-500">
-            Create your organization and choose a subscription
-            plan.
+            Create your organization and choose a subscription plan.
           </p>
         </div>
 
@@ -193,16 +181,11 @@ function Register() {
 
           {error && (
             <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
-              {Array.isArray(error)
-                ? error.join(", ")
-                : error}
+              {Array.isArray(error) ? error.join(", ") : error}
             </div>
           )}
 
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-8"
-          >
+          <form onSubmit={handleSubmit} className="space-y-8">
             {/* =========================================
                 ORGANIZATION
             ========================================= */}
@@ -371,14 +354,12 @@ function Register() {
 
               {plans.length === 0 ? (
                 <div className="rounded-lg border border-yellow-200 bg-yellow-50 p-4 text-sm text-yellow-700">
-                  No active subscription plans are currently
-                  available.
+                  No active subscription plans are currently available.
                 </div>
               ) : (
                 <div className="grid gap-4 md:grid-cols-2">
                   {plans.map((plan) => {
-                    const selected =
-                      formData.packageId === plan.id;
+                    const selected = formData.packageId === plan.id;
 
                     return (
                       <button
@@ -418,28 +399,21 @@ function Register() {
 
                         <div className="mt-4">
                           <span className="text-2xl font-bold text-gray-900">
-                            $
-                            {Number(plan.price).toFixed(2)}
+                            ${Number(plan.price).toFixed(2)}
                           </span>
 
                           <span className="ml-1 text-sm text-gray-500">
-                            /{" "}
-                            {plan.billingInterval?.toLowerCase()}
+                            / {plan.billingInterval?.toLowerCase()}
                           </span>
                         </div>
 
                         {plan.features?.length > 0 && (
                           <ul className="mt-4 space-y-2">
-                            {plan.features.map(
-                              (feature, index) => (
-                                <li
-                                  key={index}
-                                  className="text-sm text-gray-600"
-                                >
-                                  ✓ {feature}
-                                </li>
-                              ),
-                            )}
+                            {plan.features.map((feature, index) => (
+                              <li key={index} className="text-sm text-gray-600">
+                                ✓ {feature}
+                              </li>
+                            ))}
                           </ul>
                         )}
                       </button>
@@ -456,14 +430,10 @@ function Register() {
             <div className="border-t pt-6">
               <button
                 type="submit"
-                disabled={
-                  loading || !formData.packageId
-                }
+                disabled={loading || !formData.packageId}
                 className="w-full rounded-lg bg-blue-600 px-5 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {loading
-                  ? "Preparing Payment..."
-                  : "Continue to Payment"}
+                {loading ? "Preparing Payment..." : "Continue to Payment"}
               </button>
 
               <button
