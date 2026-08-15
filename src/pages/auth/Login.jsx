@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 
 import api from "../../services/api";
 import { useAuth } from "../../hooks/useAuth";
-import { ROLES } from "../../const/roles";
 
 function Login() {
   const navigate = useNavigate();
@@ -35,22 +34,11 @@ function Login() {
     try {
       const response = await api.post("/auth/login", formData);
 
-      const octopiUser = login(response.data);
+      login(response.data);
 
-      if (octopiUser.role === ROLES.PLATFORM_ADMIN) {
-        navigate("/platform");
-        return;
-      }
-
-      if (
-        octopiUser.role === ROLES.ORGANIZATION_ADMIN ||
-        octopiUser.role === ROLES.ORGANIZATION_MEMBER
-      ) {
-        navigate("/organization");
-        return;
-      }
-
-      setError("Invalid user role.");
+      navigate("/dashboard", {
+        replace: true,
+      });
     } catch (error) {
       console.error(error);
 
@@ -67,9 +55,7 @@ function Login() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-gray-900">
-            Welcome Back
-          </h1>
+          <h1 className="text-3xl font-bold text-gray-900">Welcome Back</h1>
 
           <p className="mt-2 text-gray-500">
             Sign in to your Octopi Digital account
