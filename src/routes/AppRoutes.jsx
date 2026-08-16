@@ -6,11 +6,13 @@ import Register from "../pages/auth/Register";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Overview from "../pages/dashboard/Overview";
 
-// Platform
+// Platform / Shared
 import Organizations from "../pages/platform/Organizations";
 import OrganizationDetails from "../pages/platform/OrganizationDetails";
 import Plans from "../pages/platform/Plans";
 import CreatePlan from "../pages/platform/CreatePlan";
+import PlanDetails from "../pages/platform/PlanDetails";
+import EditPlan from "../pages/platform/EditPlan";
 import Transactions from "../pages/platform/Transactions";
 
 // Organization Admin
@@ -27,9 +29,8 @@ import Invoices from "../pages/organization/Invoices";
 import Profile from "../pages/member/Profile";
 import ChangePassword from "../pages/member/ChangePassword";
 import OrganizationInfo from "../pages/member/OrganizationInfo";
+
 import ProtectedRoute from "./ProtectedRoute";
-import PlanDetails from "../pages/platform/PlanDetails";
-import EditPlan from "../pages/platform/EditPlan";
 
 function AppRoutes() {
   return (
@@ -44,13 +45,11 @@ function AppRoutes() {
 
         <Route element={<ProtectedRoute />}>
           <Route path="/dashboard" element={<Dashboard />}>
-            {/* ---------- Common ---------- */}
+            {/* ==================== COMMON ==================== */}
 
             <Route path="overview" element={<Overview />} />
 
-            {/* ==================================================
-                PLATFORM ADMIN
-            ================================================== */}
+            {/* ==================== PLATFORM ==================== */}
 
             <Route path="organizations" element={<Organizations />} />
 
@@ -67,11 +66,22 @@ function AppRoutes() {
 
             <Route path="plans/:id/edit" element={<EditPlan />} />
 
+            {/* ==================== TRANSACTIONS ==================== */}
+
+            {/*
+              Same component for both:
+
+              PLATFORM_ADMIN
+                -> all transactions
+
+              ORGANIZATION_ADMIN
+                -> own organization transactions
+
+              The Transactions component handles the role.
+            */}
             <Route path="transactions" element={<Transactions />} />
 
-            {/* ==================================================
-                ORGANIZATION ADMIN
-            ================================================== */}
+            {/* ==================== ORGANIZATION ADMIN ==================== */}
 
             <Route
               path="organization/profile"
@@ -92,9 +102,7 @@ function AppRoutes() {
 
             <Route path="billing/invoices" element={<Invoices />} />
 
-            {/* ==================================================
-                ORGANIZATION MEMBER
-            ================================================== */}
+            {/* ==================== MEMBER ==================== */}
 
             <Route path="profile" element={<Profile />} />
 
