@@ -98,6 +98,10 @@ export const MENU = {
       path: "billing",
       subMenu: [
         {
+          label: "Billing",
+          path: "billing",
+        },
+        {
           label: "Payment Method",
           path: "billing/payment-method",
         },
